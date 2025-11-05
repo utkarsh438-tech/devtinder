@@ -15,7 +15,7 @@ const ConnectionRequests=await ConnectionRequest.find({
 
 res.json({
     message:"Connection Requests fetched successfully",
-    data:ConnectionRequests
+    data: ConnectionRequests
 })
         
     } catch (error) {

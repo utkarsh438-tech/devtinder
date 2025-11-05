@@ -19,7 +19,7 @@ try{
     });
     await user.save();
     console.log("User signed up successfully");
-    res.send({ message: "User signed up successfully", user });
+    res.json({ message: "User signed up successfully", data: user });
 }catch(error){
     if (error.name === 'ValidationError') {
         return res.status(400).send({ message: "Validation error", error: error.message });
@@ -52,7 +52,7 @@ try{
        // 7 days
     });
     console.log("User logged in successfully");
-    res.send({ message: "Login successful", user });
+    res.json({ message: "Login successful", data: user });
 }catch(error){
     res.status(500).send({ message: "Server error", error: error.message });
 }
@@ -62,6 +62,6 @@ try{
 
 AuthRouter.post('/logout', (req, res) => {
     res.clearCookie('token');
-    res.send({ message: "Logout successful" });
+    res.json({ message: "Logout successful" });
 });
 module.exports = AuthRouter;

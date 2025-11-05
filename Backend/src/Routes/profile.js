@@ -22,7 +22,7 @@ ProfileRouter.patch('/user', async (req, res) => {
             return res.status(404).send({ message: "User not found" });
         }
         console.log("User updated successfully");
-        res.send({ message: "Profile updated successfully" });
+        res.json({ message: "Profile updated successfully" });
     } catch (error) {
         res.status(500).send({ message: "Server error", error: error.message });
     }
@@ -37,13 +37,13 @@ ProfileRouter.delete('/user/:id',async(req,res)=>{
             res.status(500).send({message:"Server error",error:error.message});
         }
         console.log("User deleted successfully");
-        res.send({message:"User deleted successfully"});
+        res.json({message:"User deleted successfully"});
 });
 
 
 ProfileRouter.get('/profile/view', auth, async (req, res) => {
     try {
-        res.send({ message: "Profile retrieved successfully", user: req.user });
+        res.json({ message: "Profile retrieved successfully", data: req.user });
     } catch (error) {
         res.status(500).send({ message: "Server error", error: error.message });
     }
@@ -54,7 +54,7 @@ try {
     const UserData = new User(req.body);
 
     await UserData.save();
-    res.send({message:"User created successfully", user: UserData});
+    res.json({message:"User created successfully", data: UserData});
 } catch (error) {
     if (error.name === 'ValidationError') {
         return res.status(400).send({message: "Validation error", error: error.message});
@@ -72,7 +72,7 @@ ProfileRouter.patch('/profile/edit',auth,async(req,res)=>{
        const user=req.user;
        Object.keys(req.body).forEach((update)=>user[update]=req.body[update]);
        await user.save();
-       return res.send({message:"Profile updated successfully",user});
+       return res.json({message:"Profile updated successfully", data: user});
 
     }catch(error){
         return res.status(400).send({message:error.message});
@@ -97,7 +97,7 @@ ProfileRouter.patch('/profile/password', auth, async (req, res) => {
         const hashedNewPassword = await bcrypt.hash(newPassword, 10);
         user.password = hashedNewPassword;
         await user.save();
-        res.send({ message: "Password updated successfully" });
+        res.json({ message: "Password updated successfully" });
     } catch (error) {
         res.status(500).send({ message: "Server error", error: error.message });
     }

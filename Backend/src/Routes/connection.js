@@ -33,7 +33,7 @@ ProfileRouter.post('/sendConnectionRequest', auth, async (req, res) => {
             toUserId: toUserId
         });
         await connectionRequest.save();
-        res.send({ message: "Connection request sent successfully", connectionRequest });
+        res.json({ message: "Connection request sent successfully", data: connectionRequest });
     } catch (error) {
         res.status(500).send({ message: "Server error", error: error.message });
     }
@@ -75,7 +75,7 @@ $or:[
 
     const connectionRequest=new ConnectionRequest({ fromUserId, toUserId, status });
     await connectionRequest.save();
-    res.json({ message: `Connection request ${status} successfully`, connectionRequest });
+    res.json({ message: `Connection request ${status} successfully`, data: connectionRequest });
  }catch(error){
     res.status(400).send({ message: "Server error", error: error.message });
  }
@@ -106,7 +106,7 @@ if(connectionRequest.status === 'accepted' || connectionRequest.status === 'reje
 }
 connectionRequest.status=status;
 await connectionRequest.save();
-res.json({message:`Connection request ${status} successfully`,connectionRequest});
+res.json({message:`Connection request ${status} successfully`, data: connectionRequest});
 
 
 
