@@ -39,7 +39,7 @@ await axios.post(API_URL+"/logout",{},{
         <div className="w-10 rounded-full">
           <img
             alt="Tailwind CSS Navbar component"
-            src={user.photoUrls} />
+            src={user.photourls} />
         </div>
       </div>
       <ul

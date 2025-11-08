@@ -45,7 +45,7 @@ ProfileRouter.get('/profile/view', auth, async (req, res) => {
     try {
         res.json({ message: "Profile retrieved successfully", data: req.user });
     } catch (error) {
-        res.status(500).send({ message: "Server error", error: error.message });
+        res.status(401).send({ message: "Server error", error: error.message });
     }
 });
 

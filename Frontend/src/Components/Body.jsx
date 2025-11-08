@@ -19,10 +19,11 @@ const Body = () => {
 
 const fetchUserData=async()=>{
   try{
-    const res=await axios.get(API_URL+'/profile/view',{
-withCredentials:true,
+    const res = await axios.get(API_URL + '/profile/view', {
+      withCredentials: true,
     });
-dispatch(addUser(res.data));
+    // backend returns { message, data: user }
+    dispatch(addUser(res.data?.data));
   }catch(error){
       if (error.message.includes('401') || error.message.includes('Unauthorized')) { 
          

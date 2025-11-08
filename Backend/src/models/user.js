@@ -32,13 +32,15 @@ const userSchema = new mongoose.Schema({
             if(validator.isStrongPassword(value)===false){
                 throw new Error("Password is not strong enough");
             }
-        }
+        },
+        
     },
     age: {
         type: Number,
         // required: true,
         min:18,
-        max:50
+        max:50,
+        default:18
     },
         gender: {
             type: String,
@@ -47,7 +49,8 @@ const userSchema = new mongoose.Schema({
                 if (!allowedGenders.includes(value)) {
                     throw new Error('Gender must be Male, Female, or Other');
                 }
-            }
+            },
+            default:"Male"
         },
         skills:{
         type: [String],
