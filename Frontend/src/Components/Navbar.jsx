@@ -1,12 +1,35 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
+import { API_URL  } from '../utils/constants.js';
+// import onClickOutside from '../utils/clickOutside.js';
+import { removeUser } from '../utils/userSlice.js';
+
 const Navbar = () => {
   const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout =async () => {
+    // Add logout functionality here
+    try{
+await axios.post(API_URL+"/logout",{},{
+  withCredentials:true,
+})
+      // Clear user from redux store and navigate to login
+      dispatch(removeUser());
+      navigate('/loginpage');
+    }catch(error){
+      console.log({error})
+    }
+  }
   return (
     <div> 
- <div className="navbar bg-base-900 shadow-sm">
+ <div className="navbar bg-neutral shadow-sm">
   <div className="flex-1">
-    <a className="btn btn-ghost text-xl">DevTinder</a>
+    <Link to="/" className="btn btn-ghost text-xl">DevTinder</Link>
   </div>
   {user && (<div className="flex gap-2">
     {/* <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" /> */}
@@ -23,13 +46,17 @@ const Navbar = () => {
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
         <li>
-          <a className="justify-between">
+          <Link to="/profile" className="justify-between">
             Profile
             <span className="badge">New</span>
-          </a>
+          </Link>
         </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li>
+          <Link to="/settings">Settings</Link>
+        </li>
+        <li>
+          <button type="button" onClick={handleLogout} className="w-full text-left">Logout</button>
+        </li>
       </ul>
     </div>
   </div>)}

@@ -5,25 +5,40 @@ import { useDispatch } from 'react-redux'
 import { addUser } from '../utils/userSlice.js'
 import { useNavigate } from 'react-router-dom';
 import { API_URL as BASEURL } from '../utils/constants.js';
+import toast, { Toaster } from 'react-hot-toast';
+
 const Login = () => {
-  const [email, setEmail] =useState('');
-  const [password, setPassword] =useState('');
+  const [email, setEmail] = useState('micro@gmail.com');
+  const [password, setPassword] = useState('Micro@12356');
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
 
 const handlelogin = async (e) => {
+  e?.preventDefault();
+  
+  if (!email || !password) {
+    toast.error('Email and password are required');
+    return;
+  }
 
-  e.preventDefault();
+  setIsLoading(true);
+  
   try {
-    const response = await axios.post( BASEURL+"/login", { Email: email, password }, {
+    const response = await axios.post(BASEURL + "/login", { Email: email, password }, {
       withCredentials: true
     });
-    console.log('Login successful:', response.data);
+    
+    toast.success('Login successful!');
     dispatch(addUser(response.data.data));
-    return navigate('/');
+    navigate('/');
   } catch (error) {
+    const errorMessage = error.response?.data?.message || 'Login failed. Please try again.';
+    toast.error(errorMessage);
     console.error('Login error:', error);
+  } finally {
+    setIsLoading(false);
   }
 }
 
@@ -87,8 +102,15 @@ const handlelogin = async (e) => {
 </p>
 
 <div className="validator-hint hidden">Enter valid email address</div>
+      <Toaster position="top-center" reverseOrder={false} />
     <div className="card-actions justify-center my-4">
-      <button className="btn btn-primary" onClick={handlelogin}>Login</button>
+      <button 
+        className={`btn btn-primary ${isLoading ? 'loading' : ''}`} 
+        onClick={handlelogin}
+        disabled={isLoading}
+      >
+        {isLoading ? 'Logging in...' : 'Login'}
+      </button>
     </div>
   </div>
 </div>
