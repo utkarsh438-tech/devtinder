@@ -54,6 +54,9 @@ await axios.post(API_URL+"/logout",{},{
         <li>
           <Link to="/connections">Connections</Link>
         </li>
+         <li>
+          <Link to="/requests">Requests</Link>
+        </li>
         <li>
           <button type="button" onClick={handleLogout} className="w-full text-left">Logout</button>
         </li>

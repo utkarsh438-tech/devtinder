@@ -8,7 +8,7 @@ import appstore from './utils/appstore'
 import Feed from './Components/Feed'
 import Profile from './Components/Profile'
 import Connection from './Components/Connection'
-
+import Request from './Components/Request'
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
           <Route path='profile' element={<Profile />} />
         <Route path='loginpage' element={<Login />} />
         <Route path='connections' element={<Connection />} />
+        <Route path="requests" element={<Request />} />
         </Route>
       </Routes>
       {/* <Fotter /> */}

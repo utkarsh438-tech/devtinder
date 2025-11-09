@@ -10,7 +10,7 @@ const LoggedInUserId=req.user._id;
 const ConnectionRequests=await ConnectionRequest.find({
     toUserId:LoggedInUserId,
     status:'interested'
-}).populate('fromUserId',['Firstname','Lastname','bio','skills']);
+}).populate('fromUserId',['Firstname','Lastname','bio','skills','photourls']);
 
 
 res.json({
