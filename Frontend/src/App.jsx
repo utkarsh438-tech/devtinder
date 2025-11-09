@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import appstore from './utils/appstore'
 import Feed from './Components/Feed'
 import Profile from './Components/Profile'
+import Connection from './Components/Connection'
 
 
 function App() {
@@ -20,8 +21,9 @@ function App() {
           <Route index element={<Feed />} />
           {/* protected/profile route will be rendered inside Body so fetchUserData runs first */}
           <Route path='profile' element={<Profile />} />
-        </Route>
         <Route path='loginpage' element={<Login />} />
+        <Route path='connections' element={<Connection />} />
+        </Route>
       </Routes>
       {/* <Fotter /> */}
     </BrowserRouter>
