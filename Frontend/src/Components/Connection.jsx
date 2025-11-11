@@ -30,7 +30,12 @@ const Connection = () => {
   }
 
   useEffect(() => {
-    fetchConnections();
+    // Only fetch if connections don't exist in store
+    if (!connections) {
+      fetchConnections();
+    } else {
+      setIsLoading(false);
+    }
   }, []);
 
   if (isLoading) {
@@ -70,12 +75,14 @@ const Connection = () => {
       
       <div className="  flex justify-center  gap-6">
         {connections.map((connection) => {
-          const { Firstname, Lastname, photourls, bio, age, gender } = connection;
+          const {_id, Firstname, Lastname, photourls, bio, age, gender } = connection;
           return (
-            <div className="card  bg-gray-900 shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+            <div 
+            key={_id}
+            className="card  bg-gray-900 shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
               <figure className="px-4 pt-4">
                 <img
-                  src={photourls || 'https://via.placeholder.com/150'}
+                  src={photourls?.[0] || 'https://via.placeholder.com/150'}
                   alt={`${Firstname}'s photo`}
                   className="rounded-xl w-32 h-32 object-cover"
                   onError={(e) => {
@@ -98,13 +105,13 @@ const Connection = () => {
                   </p>
                 )}
                 <div className="card-actions mt-4">
-                  <button 
+                  {/* <button 
                     className="btn btn-primary btn-sm"
                     onClick={() => toast.success(`Starting chat with ${Firstname}...`)}
                   >
                     Message
-                  </button>
-                  <button 
+                  </button> */}
+                  {/* <button 
                     className="btn btn-ghost btn-sm"
                     onClick={() => toast('Viewing profile...', {
                       icon: '👀',
@@ -112,7 +119,7 @@ const Connection = () => {
                     })}
                   >
                     View Profile
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

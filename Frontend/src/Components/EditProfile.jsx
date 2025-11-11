@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { addUser } from '../utils/userSlice.js'
 import Usecard from './Usecard.jsx'
+import ChangePassword from './ChangePassword.jsx'
 
 const EditProfile = ({ user }) => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const EditProfile = ({ user }) => {
   const [bio, setBio] = React.useState(user?.bio || '');
   const [photourls, setPhotourls] = React.useState(user?.photourls?.[0] || '');
   const [loading, setLoading] = React.useState(false);
+  const [showPwModal, setShowPwModal] = React.useState(false);
 
   useEffect(() => {
     if (user) {
@@ -46,7 +48,6 @@ const EditProfile = ({ user }) => {
         { withCredentials: true }
       );
 
-      // backend likely returns: { message, data: updatedUser }
       const updatedUser = res.data?.data || res.data;
       if (updatedUser) {
         dispatch(addUser(updatedUser));
@@ -62,7 +63,7 @@ const EditProfile = ({ user }) => {
     }
   };
 
-  return (
+  return (<>
     <div className="flex justify-center my-10 gap-12">
       {/* Ensure Toaster is present so toast() calls show up on this page */}
       <Toaster position="top-center" />
@@ -137,16 +138,22 @@ const EditProfile = ({ user }) => {
           <button className="btn btn-primary my-4" onClick={saveProfile} disabled={loading}>
             {loading ? <span className="loading loading-spinner"></span> : 'Save Profile'}
           </button>
+
+          <button className="btn btn-secondary" onClick={() => setShowPwModal(true)}>
+            Change Password
+          </button>
         </div>
       </div>
      
  
  
  
-<Usecard user={{Firstname:firstname,Lastname:lastname,age:age,gender:gender,bio:bio,photourls:[photourls]}} />  
+<Usecard user={{Firstname:firstname,Lastname:lastname,age:age,gender:gender,bio:bio,photourls:[photourls]}} hideActions={true} />  
 </div>
 
-  )
+      <ChangePassword isOpen={showPwModal} onClose={() => setShowPwModal(false)} />
+
+  </>)
 }
 
 export default EditProfile

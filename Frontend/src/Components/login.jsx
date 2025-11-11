@@ -7,10 +7,8 @@ import { API_URL as BASEURL } from '../utils/constants.js';
 import toast, { Toaster } from 'react-hot-toast';
 
 const Login = () => {
-  const [email, setEmail] = useState('micro@gmail.com');
-  const [firstname, setFirstname] = useState('Micro');
-  const [lastname, setLastname] = useState('Soft');
-  const [password, setPassword] = useState('Micro@12356');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,11 +42,11 @@ const handlelogin = async (e) => {
 }
 
   return (
-    <div className="flex justify-center my-10  ">
-      <div className="card bg-base-300 w-96 shadow-sm">
+    <div className="min-h-[calc(100vh-6rem)] flex items-center justify-center px-4 py-10">
+      <div className="card w-full max-w-md bg-base-200 shadow">
   <div className="card-body">
-    <h2 className="card-title justify-center">Welcome!</h2>
-    {/* <p>A card component has a figure, a body part, and inside body there are title and actions parts</p> */}
+    <h2 className="card-title justify-center">Welcome back</h2>
+
 <div className="flex flex-col gap-4 ">
   
 
@@ -56,7 +54,7 @@ const handlelogin = async (e) => {
 
 
   
-    <label className="input validator w-full ">
+    <label className="input validator w-full">
   <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <g
       strokeLinejoin="round"
@@ -98,17 +96,10 @@ const handlelogin = async (e) => {
     placeholder="Password"
     value={password}
     onChange={(e)=>setPassword(e.target.value)}
-    // minlength="8"
     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
     title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
   />
 </label></div>
-<p className="validator-hint hidden">
-  Must be more than 8 characters, including
-  <br />At least one number <br />At least one lowercase letter <br />At least one uppercase letter
-</p>
-
-<div className="validator-hint hidden">Enter valid email address</div>
       <Toaster position="top-center" reverseOrder={false} />
     <div className="card-actions flex-col gap-2 justify-center my-4">
       <button 

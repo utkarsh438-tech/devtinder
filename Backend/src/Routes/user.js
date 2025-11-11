@@ -10,7 +10,7 @@ const LoggedInUserId=req.user._id;
 const ConnectionRequests=await ConnectionRequest.find({
     toUserId:LoggedInUserId,
     status:'interested'
-}).populate('fromUserId',['Firstname','Lastname','bio','skills','photourls']);
+}).populate('fromUserId',['Firstname','Lastname','bio','skills','photourls','age','gender']);
 
 
 res.json({
@@ -32,17 +32,18 @@ const Connections=await ConnectionRequest.find({
         {fromUserId:LoggedInUserId,status:'accepted'},
         {toUserId:LoggedInUserId,status:'accepted'}
     ]
-}).populate('fromUserId',['Firstname','Lastname','photourls','bio','skills'])
-.populate('toUserId',['Firstname','Lastname','photourls','bio','skills']);
+}).populate('fromUserId',['Firstname','Lastname','photourls','bio','skills','age','gender'])
+.populate('toUserId',['Firstname','Lastname','photourls','bio','skills','age','gender']);
 
 // const valueinfo=Connections.map((row)=>row.fromuserId)
 
 const valueddata= Connections.map((connection)=>{
+    if(!connection.fromUserId || !connection.toUserId) return null;
     if(connection.fromUserId._id.toString()===LoggedInUserId.toString()){
         return connection.toUserId;}
     else{
         return connection.fromUserId;
-    }})
+    }}).filter(Boolean); // Remove null values
 res.json({
     message:"Connections fetched successfully",
     data:   valueddata

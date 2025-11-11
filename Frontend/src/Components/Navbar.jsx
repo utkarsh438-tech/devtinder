@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { API_URL  } from '../utils/constants.js';
-// import onClickOutside from '../utils/clickOutside.js';
 import { removeUser } from '../utils/userSlice.js';
 
 const Navbar = () => {
@@ -13,16 +12,14 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout =async () => {
-    // Add logout functionality here
     try{
 await axios.post(API_URL+"/logout",{},{
   withCredentials:true,
 })
-      // Clear user from redux store and navigate to login
       dispatch(removeUser());
       navigate('/loginpage');
     }catch(error){
-      console.log({error})
+      // Silent fail - user will be logged out anyway
     }
   }
   return (
@@ -32,7 +29,6 @@ await axios.post(API_URL+"/logout",{},{
     <Link to="/" className="btn btn-ghost text-xl">DevTinder</Link>
   </div>
   {user && (<div className="flex gap-2">
-    {/* <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" /> */}
     <div className='form-control'> Welcome! {user.Firstname}</div>
     <div className="dropdown dropdown-end mx-5">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">

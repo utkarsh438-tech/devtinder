@@ -40,7 +40,10 @@ const reviewrequest = async (_id, status) => {
   }}
 
 useEffect(()=>{
-  fetchRequests();
+  // Only fetch if requests don't exist in store
+  if (!requests) {
+    fetchRequests();
+  }
 },[]);
 
   if (!requests || requests.length === 0) {
@@ -58,12 +61,13 @@ useEffect(()=>{
      <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-8">Your Requests</h1>
 
-      <div className="  flex justify-center  gap-6">
+      <div className="  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
         {requests.map((request) => {
+          if (!request.fromUserId) return null;
           const { _id,Firstname, Lastname, photourls, bio, age, gender } =request.fromUserId;
           return (
             <div key={_id}
-            className="card  bg-gray-900 shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+            className="card shadow-xl backdrop-blur-xl bg-white/5 border border-white/10 overflow-hidden w-full max-w-xs sm:w-80 text-white">
               <figure className="px-4 pt-4">
                 <img
                   src={photourls?.[0] || "https://img.freepik.com/premium-vector/character-avatar-isolated_729149-194801.jpg?semt=ais_hybrid&w=740&q=80"}
@@ -80,12 +84,23 @@ useEffect(()=>{
                   {Firstname} {Lastname}
                 </h2>
                 {age && gender && (
-                  <p className="text-sm text-gray-500 mb-2">
-                    {age} • {gender}
+                  <p className="text-sm text-white/70 mb-2">
+                    {age}  {gender}
                   </p>
                 )}
                 {bio && (
-                  <p className="text-gray-600 line-clamp-3">
+                  <p
+                    className="text-white/80"
+                    title={bio}
+                    style={{
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      maxHeight: '4.5rem' // approx 3 lines
+                    }}
+                  >
                     {bio}
                   </p>
                 )}
