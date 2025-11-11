@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 import Body from './Components/Body'
 import Login from './Components/login'
+import Signup from './Components/Signup'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import appstore from './utils/appstore'
@@ -22,6 +23,7 @@ function App() {
           {/* protected/profile route will be rendered inside Body so fetchUserData runs first */}
           <Route path='profile' element={<Profile />} />
         <Route path='loginpage' element={<Login />} />
+        <Route path='signup' element={<Signup />} />
         <Route path='connections' element={<Connection />} />
         <Route path="requests" element={<Request />} />
         </Route>

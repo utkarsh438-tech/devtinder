@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 import { useDispatch } from 'react-redux'
 import { addUser } from '../utils/userSlice.js'
@@ -9,6 +8,8 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Login = () => {
   const [email, setEmail] = useState('micro@gmail.com');
+  const [firstname, setFirstname] = useState('Micro');
+  const [lastname, setLastname] = useState('Soft');
   const [password, setPassword] = useState('Micro@12356');
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -49,6 +50,12 @@ const handlelogin = async (e) => {
     <h2 className="card-title justify-center">Welcome!</h2>
     {/* <p>A card component has a figure, a body part, and inside body there are title and actions parts</p> */}
 <div className="flex flex-col gap-4 ">
+  
+
+
+
+
+  
     <label className="input validator w-full ">
   <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <g
@@ -103,13 +110,20 @@ const handlelogin = async (e) => {
 
 <div className="validator-hint hidden">Enter valid email address</div>
       <Toaster position="top-center" reverseOrder={false} />
-    <div className="card-actions justify-center my-4">
+    <div className="card-actions flex-col gap-2 justify-center my-4">
       <button 
-        className={`btn btn-primary ${isLoading ? 'loading' : ''}`} 
+        className={`btn btn-primary w-full ${isLoading ? 'loading' : ''}`} 
         onClick={handlelogin}
         disabled={isLoading}
       >
         {isLoading ? 'Logging in...' : 'Login'}
+      </button>
+      <button
+        className="btn btn-ghost w-full"
+        onClick={() => navigate('/signup')}
+        disabled={isLoading}
+      >
+        Create a new account
       </button>
     </div>
   </div>

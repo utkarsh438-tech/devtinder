@@ -63,7 +63,7 @@ const userSchema = new mongoose.Schema({
         }
     ,photourls:{
         type:[String],
-        default:["https://example.com/default-photo.jpg"]
+        default:["https://img.freepik.com/premium-vector/character-avatar-isolated_729149-194801.jpg?semt=ais_hybrid&w=740&q=80"]
     }},
     {
         timestamps: true

@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import {  API_URL } from '../utils/constants.js'
 import { addUser } from '../utils/userSlice.js'
+import { Toaster } from 'react-hot-toast'
 
 const Body = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ useEffect(()=>{
 
     <div>
       <Navbar />
+      <Toaster position="top-center" reverseOrder={false} />
       <Outlet />
       <Fotter />
     </div>
